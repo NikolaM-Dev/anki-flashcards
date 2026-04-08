@@ -11,7 +11,6 @@
     "@types/node": "25.5.2",
     "knip": "6.3.1",
     "prettier": "3.8.1",
-    "tsc": "2.0.4",
     "vite": "8.0.7"
   },
   "peerDependencies": {
@@ -30,11 +29,11 @@
     "build": "vite build",
     "dev": "vite",
     "format": "prettier --write src",
-    "lanaguage-islands": "bun run ./src/language-islands/deck.ts",
+    "knip": "knip",
+    "language-islands": "bun run ./src/language-islands/deck.ts",
     "preview": "vite preview",
-    "typecheck": "tsc --noEmit",
-    "vocabulary": "bun run ./src/vocabulary/deck.ts",
-    "knip": "knip"
+    "typecheck": "bunx tsc --noEmit",
+    "vocabulary": "bun run ./src/vocabulary/deck.ts"
   },
   "type": "module"
 }
