@@ -17,37 +17,52 @@
 
 ## 🗂️ Refile
 
+### Audios wiht `edge-tss`
+
 ```ts
-    const id = nextFields.id.value;
-    if (nextFields.targetLanguageAudio.value === "") {
-      nextFields.targetLanguageAudio.value = `[sound:${id}.mp3]`;
+// tts.ts
+import { EdgeTTS } from '@andresaya/edge-tts';
 
-      const targetLanguage = nextFields.targetLanguage.value;
-      const audioFilename = `${id}.mp3`;
+const VOICE = 'en-US-AndrewNeural';
 
-      console.log(
-        ` 🎵 Generating audio for note ${id}: "${targetLanguage.substring(0, 50)}..."`,
-      );
+export async function generateAudio(text: string): Promise<string> {
+  const tts = new EdgeTTS();
+  await tts.synthesize(text, VOICE);
+  return tts.toBase64();
+}
+```
 
-      try {
-        // Generate audio (base64)
-        const base64Audio = await generateAudio(targetLanguage);
+```ts
+const id = nextFields.id.value;
+if (nextFields.targetLanguageAudio.value === "") {
+  nextFields.targetLanguageAudio.value = `[sound:${id}.mp3]`;
 
-        // Store audio file in Anki
-        console.log(`   💾 Storing audio file: ${id}.mp3`);
-        await storeMediaFile(audioFilename, base64Audio);
+  const targetLanguage = nextFields.targetLanguage.value;
+  const audioFilename = `${id}.mp3`;
 
-        // Update Back field with audio and add Id field
-        console.log(`   ✏️ Updating Back field with audio and Id: ${id}`);
-        await updateNoteFields(note.noteId, {
-          targetLanguageAudio: nextFields.targetLanguageAudio.value,
-          id,
-        });
+  console.log(
+    ` 🎵 Generating audio for note ${id}: "${targetLanguage.substring(0, 50)}..."`,
+  );
 
-        console.log(`✅ Note ${id} updated successfully`);
-      } catch (error) {
-        console.error(`❌ Error processing note ${id}:`, error);
-      }
+  try {
+    // Generate audio (base64)
+    const base64Audio = await generateAudio(targetLanguage);
+
+    // Store audio file in Anki
+    console.log(`   💾 Storing audio file: ${id}.mp3`);
+    await storeMediaFile(audioFilename, base64Audio);
+
+    // Update Back field with audio and add Id field
+    console.log(`   ✏️ Updating Back field with audio and Id: ${id}`);
+    await updateNoteFields(note.noteId, {
+      targetLanguageAudio: nextFields.targetLanguageAudio.value,
+      id,
+    });
+
+    console.log(`✅ Note ${id} updated successfully`);
+  } catch (error) {
+    console.error(`❌ Error processing note ${id}:`, error);
+}
 ```
 
 ## 🎒 Backlog
