@@ -5,7 +5,6 @@
 ## 🔥 in Progress
 
 - [ ] Here 🙋
-- [ ] Update the GitHub Respository
 
 ## 🥶 Wait
 
@@ -67,12 +66,13 @@ if (nextFields.targetLanguageAudio.value === "") {
 
 ## 🎒 Backlog
 
-- [x] Clean my anki related repositories in GitHub ✅ 2026-04-08
 
 ---
 
 ## 🗃️ Archive
 
+- [x] Update the GitHub Respository ✅ 2026-04-08
+- [x] Clean my anki related repositories in GitHub ✅ 2026-04-08
 - [x] Change the id form using uuid to use a denote id scheme ✅ 2026-04-08
   - [x] Vocab ✅ 2026-04-08
   - [x] Language Islands ✅ 2026-04-08
