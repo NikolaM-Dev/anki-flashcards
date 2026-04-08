@@ -1,0 +1,221 @@
+/* 1. Use a more-intuitive box-sizing model */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* 2. Remove default margin */
+* {
+  margin: 0;
+}
+
+body {
+  /* 3. Add accessible line-height */
+  line-height: 1.5;
+  /* 4. Improve text rendering */
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 5. Improve media defaults */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* 6. Inherit fonts for form controls */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* 7. Avoid text overflows */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+/* 8. Improve line wrapping */
+p {
+  margin: 0;
+  text-wrap: pretty;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-wrap: balance;
+}
+
+/*
+  9. Create a root stacking context
+*/
+#root,
+#__next {
+  isolation: isolate;
+}
+
+:root {
+  --accent-color: rgb(56, 189, 248);
+  --bg-color: rgb(15, 23, 42);
+  --bg-label: rgb(125, 211, 252, 0.1);
+  --border-color: rgb(55 65 81);
+  --fg-color: rgb(248, 250, 252);
+  --fg-label: rgb(125, 211, 252);
+  --hr-color: rgb(255 255 255 / 0.05);
+  --lavander-color: rgb(165 180 252 / 1);
+  --secondary-fg-color: rgb(148, 163, 184);
+  --soft-bg-color: rgb(30, 41, 59);
+}
+
+.card.nightMode {
+  background-color: var(--bg-color);
+  color: var(--fg-color);
+  font-family:
+    'Apoteric Sans Mono', 'Maple Mono NF', 'JetBrainsMono Nerd Font',
+    'Merriweather', 'JetBrainsMono Nerd Font', 'Open Sans', sans-serif;
+  font-size: 16px;
+  padding: 22px;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.flashcard {
+  background-color: var(--soft-bg-color);
+  border-radius: 8px;
+  border: 2px solid var(--border-color);
+  margin: 0 auto;
+  max-width: 672px;
+  padding: 28px;
+}
+
+.flashcard__sentence::first-letter,
+.flashcard__word::first-letter,
+.flashcard__sentence-translation::first-letter,
+.flashcard__word-translation::first-letter,
+.flashcard__sentence-pronunciation::first-letter,
+.flashcard__word-pronunciation::first-letter {
+  text-transform: capitalize;
+}
+
+ul {
+  margin: 0;
+  margin-bottom: 12px;
+
+  padding: 0 24px;
+}
+
+li {
+  font-size: 14px;
+}
+
+.flashcard__sentence-translation,
+.flashcard__word-translation {
+  color: var(--secondary-fg-color);
+}
+
+.flashcard__sentence-phonetic,
+.flashcard__word-phonetic {
+  color: var(--secondary-fg-color);
+}
+
+.flashcard__sentence-pronunciation,
+.flashcard__word-pronunciation {
+  color: var(--lavander-color);
+}
+
+.flashcard__word {
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--accent-color);
+}
+
+.flashcard__divider {
+  background-color: transparent;
+  border: 1px solid var(--hr-color);
+  margin: 24px 0;
+}
+
+.flashcard__label {
+  background-color: var(--bg-label);
+  border-radius: 12px;
+  color: var(--fg-label);
+  display: inline-block;
+  font-size: 12px;
+  font-weight: bold;
+  margin-bottom: 4px;
+  padding: 2px 12px;
+}
+
+summary {
+  cursor: pointer;
+  list-style-type: '';
+}
+
+summary::after {
+  color: var(--fg-label);
+  content: '…';
+  font-size: 12px;
+}
+
+details[open] summary::after {
+  content: '';
+}
+
+img {
+  border-radius: 8px;
+  margin: 0 auto;
+}
+
+.flashcard__audios,
+.flashcard__word,
+img {
+  margin-top: 24px;
+}
+
+.flashcard__audios {
+  display: flex;
+  justify-content: center;
+  gap: 28px;
+}
+
+.replay-button svg {
+  height: 40px;
+  width: 40px;
+}
+
+.replay-button svg circle {
+  fill: var(--soft-bg-color);
+  stroke-width: 3;
+  stroke: var(--border-color);
+}
+
+.replay-button svg path {
+  transform: scale(0.6) translate(19px, 20px);
+}
+
+.replay-button svg path {
+  fill: var(--accent-color);
+}
+
+a {
+  color: var(--accent-color) !important;
+  display: block;
+  text-decoration: underline !important;
+}

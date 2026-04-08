@@ -1,0 +1,17 @@
+<section class="flashcard">
+  <article>
+    <div class="flashcard__sentence">{{context}}</div>
+
+    <p class="flashcard__word">{{sentence}}</p>
+  </article>
+
+  <hr class="flashcard__divider" />
+
+  <div class="flashcard__word-phonetic">{{definition}}</div>
+
+  <hr class="flashcard__divider" />
+
+  <div class="flashcard__audios">
+    {{tts en_US voices=gTTS:context}} {{tts en_US voices=gTTS:sentence}}
+  </div>
+</section>
