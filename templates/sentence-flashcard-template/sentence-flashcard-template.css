@@ -14,8 +14,8 @@
 .card.nightMode {
   background-color: var(--bg-color);
   color: var(--fg-color);
-  font-family: "", "Merriweather", "JetBrainsMono Nerd Font", "Open Sans",
-    sans-serif;
+  font-family:
+    '', 'Merriweather', 'JetBrainsMono Nerd Font', 'Open Sans', sans-serif;
   font-size: 16px;
   padding: 22px;
   padding: 5px;
