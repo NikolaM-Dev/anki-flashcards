@@ -1,14 +1,28 @@
 {
-  "name": "anki-flashcard-templates",
-  "private": true,
+  "name": "anki-flashcards",
+  "module": "index.ts",
   "version": "0.0.0",
   "type": "module",
+  "private": true,
   "scripts": {
-    "dev:watch": "vite",
+    "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "format": "prettier --write src",
+    "ll": "bun run ./src/language-islands/deck.ts",
+    "typecheck": "tsc --noEmit",
+    "vocab": "bun run ./src/vocabulary/deck.ts"
+  },
+  "dependencies": {
+    "@andresaya/edge-tts": "1.8.0",
+    "marked": "18.0.0"
   },
   "devDependencies": {
-    "vite": "6.1.0"
+    "@types/bun": "^1.3.11",
+    "prettier": "3.8.1",
+    "vite": "8.0.7"
+  },
+  "peerDependencies": {
+    "typescript": "^6.0.2"
   }
 }
