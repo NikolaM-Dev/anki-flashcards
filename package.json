@@ -6,6 +6,9 @@
     "type": "git",
     "url": "git+https://github.com/NikolaM-Dev/anki-flashcards.git"
   },
+  "dependencies": {
+    "@andresaya/edge-tts": "1.8.0"
+  },
   "devDependencies": {
     "@types/bun": "1.3.11",
     "@types/node": "25.5.2",
