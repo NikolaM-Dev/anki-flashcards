@@ -10,10 +10,6 @@
 
 ## 🔮 Next
 
-- [ ] Document my Anki setup in my second brain
-  - [ ] Plugins, and [gTTS text to speech support - AnkiWeb](https://ankiweb.net/shared/info/391644525)
-  - [ ] Docs the decks
-
 ## 🗂️ Refile
 
 ### Audios wiht `edge-tss`
@@ -66,11 +62,12 @@ if (nextFields.targetLanguageAudio.value === "") {
 
 ## 🎒 Backlog
 
-
 ---
 
 ## 🗃️ Archive
 
+- [x] Document my Anki setup in my second brain ✅ 2026-04-08
+  - [x] Plugins, and [gTTS text to speech support - AnkiWeb](https://ankiweb.net/shared/info/391644525) ✅ 2026-04-08
 - [x] Update the GitHub Respository ✅ 2026-04-08
 - [x] Clean my anki related repositories in GitHub ✅ 2026-04-08
 - [x] Change the id form using uuid to use a denote id scheme ✅ 2026-04-08
