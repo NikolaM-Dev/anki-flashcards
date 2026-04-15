@@ -45,6 +45,12 @@ async function main() {
 
   const notesInfo = await getNotesInfo<VocabularyDeckFieldKey>(noteIds);
   for (const note of notesInfo) {
+    if (note.fields.id.value !== '') {
+      console.log(`  ✅ Note ${note.fields.id.value} already updated`);
+
+      continue;
+    }
+
     const nextFields: Record<VocabularyDeckFieldKey, string> = {
       context: titleCase(note.fields.context.value),
       contextAudio: note.fields.contextAudio.value || '',

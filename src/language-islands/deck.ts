@@ -30,6 +30,12 @@ async function main() {
 
   const notesInfo = await getNotesInfo<LanguageIslandsDeckFieldKey>(noteIds);
   for (const note of notesInfo) {
+    if (note.fields.id.value !== '') {
+      console.log(`  ✅ Note ${note.fields.id.value} already updated`);
+
+      continue;
+    }
+
     const nextFields: Record<LanguageIslandsDeckFieldKey, string> = {
       id: note.fields.id.value || uuidv7(),
       nativeLanguage: titleCase(note.fields.nativeLanguage.value),
