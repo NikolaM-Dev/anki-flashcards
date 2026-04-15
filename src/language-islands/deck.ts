@@ -62,18 +62,18 @@ async function main() {
         const base64Audio = await generateAudio(targetLanguage);
 
         // Store audio file in Anki
-        console.log(`   💾 Storing audio file: ${audioFilename}`);
+        console.log(`  💾 Storing audio file: ${audioFilename}`);
         await storeMediaFile(audioFilename, base64Audio);
 
         // Update audio field with Anki audio tag
         nextFields.targetLanguageAudio = `[sound:${audioFilename}]`;
 
         console.log(
-          `   ✅ Audio generated and stored for note ${nextFields.id}`,
+          `  ✅ Audio generated and stored for note ${nextFields.id}`,
         );
       } catch (error) {
         console.error(
-          `   ❌ Error generating audio for note ${nextFields.id}:`,
+          `  ❌ Error generating audio for note ${nextFields.id}:`,
           error,
         );
       }
