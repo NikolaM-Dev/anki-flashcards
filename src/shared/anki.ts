@@ -165,7 +165,7 @@ export async function getNotesInfo<T extends string>(
  * const filename = await storeMediaFile("image.png", "iVBORw0KGgo...");
  * ```
  */
-async function storeMediaFile(
+export async function storeMediaFile(
   filename: string,
   data: string,
   options?: AnkiConnectOptions,
