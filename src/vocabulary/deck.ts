@@ -52,11 +52,11 @@ async function main() {
     }
 
     const nextFields: Record<VocabularyDeckFieldKey, string> = {
-      context: titleCase(note.fields.context.value),
+      context: titleCase(note.fields.context.value).replace(/&nbsp;/g, ' '),
       contextAudio: note.fields.contextAudio.value || '',
       definition: note.fields.definition.value || '',
       id: note.fields.id.value || uuidv7(),
-      sentence: titleCase(note.fields.sentence.value),
+      sentence: titleCase(note.fields.sentence.value).replace(/&nbsp;/g, ' '),
       sentenceAudio: note.fields.sentenceAudio.value || '',
     };
 

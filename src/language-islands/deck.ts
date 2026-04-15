@@ -38,8 +38,14 @@ async function main() {
 
     const nextFields: Record<LanguageIslandsDeckFieldKey, string> = {
       id: note.fields.id.value || uuidv7(),
-      nativeLanguage: titleCase(note.fields.nativeLanguage.value),
-      targetLanguage: titleCase(note.fields.targetLanguage.value),
+      nativeLanguage: titleCase(note.fields.nativeLanguage.value).replace(
+        /&nbsp;/g,
+        ' ',
+      ),
+      targetLanguage: titleCase(note.fields.targetLanguage.value).replace(
+        /&nbsp;/g,
+        ' ',
+      ),
       targetLanguageAudio: note.fields.targetLanguageAudio.value || '',
     };
 
