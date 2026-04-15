@@ -1,11 +1,14 @@
+import { v7 as uuidv7 } from 'uuid';
+
 import {
   findNotesByDeck,
   getNotesInfo,
+  storeMediaFile,
   updateNoteFields,
 } from '../shared/anki';
 import type { OllamaResponse } from '../shared/types';
-import { denoteIdScheme } from '../lib/date';
 import { titleCase, capitalize } from '../lib/string';
+import { generateAudio } from '../lib/tts';
 
 export const VOCABULARY_DECK = 'english::vocabulary';
 
@@ -20,7 +23,13 @@ type VocabJsonResponse = {
   notes: string;
 };
 
-type VocabularyDeckFieldKey = 'context' | 'definition' | 'id' | 'sentence';
+type VocabularyDeckFieldKey =
+  | 'context'
+  | 'contextAudio'
+  | 'definition'
+  | 'id'
+  | 'sentence'
+  | 'sentenceAudio';
 
 async function main() {
   console.log('🔍 Finding notes in deck:', VOCABULARY_DECK);
@@ -36,11 +45,13 @@ async function main() {
 
   const notesInfo = await getNotesInfo<VocabularyDeckFieldKey>(noteIds);
   for (const note of notesInfo) {
-    const nextFields = {
-      id: denoteIdScheme(new Date(note.noteId)),
-      definition: '',
+    const nextFields: Record<VocabularyDeckFieldKey, string> = {
       context: titleCase(note.fields.context.value),
+      contextAudio: note.fields.contextAudio.value || '',
+      definition: note.fields.definition.value || '',
+      id: note.fields.id.value || uuidv7(),
       sentence: titleCase(note.fields.sentence.value),
+      sentenceAudio: note.fields.sentenceAudio.value || '',
     };
 
     if (note.fields.context.value === '' || note.fields.sentence.value === '') {
@@ -57,6 +68,64 @@ async function main() {
       );
     } else {
       nextFields.definition = note.fields.definition.value;
+    }
+
+    if (nextFields.sentenceAudio === '') {
+      const audioFilename = `${nextFields.id}_sentence.mp3`;
+
+      console.log(
+        `  🎵 Generating audio for note ${nextFields.id}: "${nextFields.sentence.substring(0, 50)}..."`,
+      );
+
+      try {
+        // Generate audio (base64)
+        const base64Audio = await generateAudio(nextFields.sentence);
+
+        // Store audio file in Anki
+        console.log(`   💾 Storing audio file: ${audioFilename}`);
+        await storeMediaFile(audioFilename, base64Audio);
+
+        // Update audio field with Anki audio tag
+        nextFields.sentenceAudio = `[sound:${audioFilename}]`;
+
+        console.log(
+          `   ✅ Audio generated and stored for note ${nextFields.id}`,
+        );
+      } catch (error) {
+        console.error(
+          `   ❌ Error generating audio for note ${nextFields.id}:`,
+          error,
+        );
+      }
+    }
+
+    if (nextFields.contextAudio === '') {
+      const audioFilename = `${nextFields.id}_context.mp3`;
+
+      console.log(
+        `  🎵 Generating audio for note ${nextFields.id}: "${nextFields.context.substring(0, 50)}..."`,
+      );
+
+      try {
+        // Generate audio (base64)
+        const base64Audio = await generateAudio(nextFields.context);
+
+        // Store audio file in Anki
+        console.log(`   💾 Storing audio file: ${audioFilename}`);
+        await storeMediaFile(audioFilename, base64Audio);
+
+        // Update audio field with Anki audio tag
+        nextFields.contextAudio = `[sound:${audioFilename}]`;
+
+        console.log(
+          `   ✅ Audio generated and stored for note ${nextFields.id}`,
+        );
+      } catch (error) {
+        console.error(
+          `   ❌ Error generating audio for note ${nextFields.id}:`,
+          error,
+        );
+      }
     }
 
     console.log('  ✏️ Updating Fields');

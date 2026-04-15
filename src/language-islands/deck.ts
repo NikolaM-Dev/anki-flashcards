@@ -1,14 +1,21 @@
+import { v7 as uuidv7 } from 'uuid';
+
 import {
   findNotesByDeck,
   getNotesInfo,
+  storeMediaFile,
   updateNoteFields,
 } from '../shared/anki';
-import { denoteIdScheme } from '../lib/date';
+import { generateAudio } from '../lib/tts';
 import { titleCase } from '../lib/string';
 
 const LANGUAGE_ISLANDS_DECK = 'english::language-islands';
 
-type LanguageIslandsDeckFieldKey = 'id' | 'nativeLanguage' | 'targetLanguage';
+type LanguageIslandsDeckFieldKey =
+  | 'id'
+  | 'nativeLanguage'
+  | 'targetLanguage'
+  | 'targetLanguageAudio';
 
 async function main() {
   console.log('🔍 Finding notes in deck:', LANGUAGE_ISLANDS_DECK);
@@ -23,11 +30,42 @@ async function main() {
 
   const notesInfo = await getNotesInfo<LanguageIslandsDeckFieldKey>(noteIds);
   for (const note of notesInfo) {
-    const nextFields = {
-      id: denoteIdScheme(new Date(note.noteId)),
+    const nextFields: Record<LanguageIslandsDeckFieldKey, string> = {
+      id: note.fields.id.value || uuidv7(),
       nativeLanguage: titleCase(note.fields.nativeLanguage.value),
       targetLanguage: titleCase(note.fields.targetLanguage.value),
+      targetLanguageAudio: note.fields.targetLanguageAudio.value || '',
     };
+
+    if (nextFields.targetLanguageAudio === '') {
+      const targetLanguage = nextFields.targetLanguage;
+      const audioFilename = `${nextFields.id}.mp3`;
+
+      console.log(
+        `  🎵 Generating audio for note ${nextFields.id}: "${targetLanguage.substring(0, 50)}..."`,
+      );
+
+      try {
+        // Generate audio (base64)
+        const base64Audio = await generateAudio(targetLanguage);
+
+        // Store audio file in Anki
+        console.log(`   💾 Storing audio file: ${audioFilename}`);
+        await storeMediaFile(audioFilename, base64Audio);
+
+        // Update audio field with Anki audio tag
+        nextFields.targetLanguageAudio = `[sound:${audioFilename}]`;
+
+        console.log(
+          `   ✅ Audio generated and stored for note ${nextFields.id}`,
+        );
+      } catch (error) {
+        console.error(
+          `   ❌ Error generating audio for note ${nextFields.id}:`,
+          error,
+        );
+      }
+    }
 
     console.log('  ✏️ Updating Fields');
     try {
